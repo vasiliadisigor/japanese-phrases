@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#173f39"><meta name="description" content="Kotoba: 100 everyday Japanese phrases for photographers. Listen, speak, practise and write.">
+  <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css">
+  <title>Kotoba · 100 Everyday Phrases</title>
+</head>
+<body>
+<div class="shell">
+  <header><a class="brand" href="./" aria-label="Kotoba home"><span class="brand-icon" lang="ja">言</span><span>Kotoba<small>JAPANESE FOR PHOTOGRAPHER</small></span></a><button id="settingsButton" class="icon-button" aria-label="Audio and display settings">⚙</button></header>
+  <main>
+    <div class="intro"><div><p class="eyebrow">100 PHRASES · EVERY DAY IN JAPAN</p><h1>Say it like you live here.</h1><p>Listen. Say it out loud. Write it. Ten small sets, one hundred phrases.</p></div><div class="seal" lang="ja" aria-hidden="true">言<br>葉</div></div>
+    <nav class="tabs" aria-label="Learning activities"><button data-view="learn" aria-current="page">Learn</button><button data-view="practice">Practice</button><button data-view="write">Write</button><button data-view="explore">Explore</button></nav>
+    <section class="controls" aria-label="Lesson choices">
+      <label>Phrase set<select id="set"></select></label>
+      <div class="set-progress" aria-live="polite"><span class="eyebrow">THIS SET</span><strong id="setProgress">A fresh start.</strong><span id="setDue" class="muted"></span></div>
+    </section>
+
+    <section id="learnView" class="view">
+      <div class="section-line"><p class="eyebrow">YOUR NEXT SMALL STEP</p><span id="learnIndex">1 / 10</span></div>
+      <article class="study-card">
+        <div class="card-top"><span class="tag" id="setTag">GREETINGS</span><span class="register" id="register">polite</span><button id="shuffle" class="quiet">Shuffle ↻</button></div>
+        <div class="japanese-line phrase-line"><button id="studySpeak" class="speaker" aria-label="Hear this phrase">▶</button><div id="studyJp" class="phrase" lang="ja"></div></div>
+        <p id="studyKana" class="reading" lang="ja"></p><p id="studyRomaji" class="romaji"></p>
+        <p id="studyEn" class="meaning"></p>
+        <p id="studyNote" class="card-note"></p>
+        <details id="breakdown" class="breakdown"><summary>Break it down</summary><ul id="parts" class="parts"></ul><div id="kanjiRow" class="kanji-row"></div></details>
+        <div class="card-navigation"><button id="previous" class="secondary">← Previous</button><button id="next" class="primary">Next phrase →</button></div>
+      </article>
+      <aside class="photo-note"><span aria-hidden="true">◎</span><div><strong>On location</strong><div class="japanese-line scene-line"><button id="sceneSpeak" class="speaker small" aria-label="Hear the on-location example">▶</button><span id="sceneJp" lang="ja"></span></div><p id="sceneEn"></p></div></aside>
+      <div class="button-row learn-actions"><button id="preview" class="secondary">▶ Listen through this set</button><button id="startFromLearn" class="primary">Try a 10-card practice →</button></div>
+      <p class="muted center">Listen-through plays each phrase in Japanese, then English. Use it as a warm-up, then practise.</p>
+    </section>
+
+    <section id="practiceView" class="view" hidden>
+      <div id="practiceSetup" class="panel"><p class="eyebrow">TEN CARDS. YOUR OWN PACE.</p><h2>Put it into practice.</h2><p>Mistakes come back at the end. A phrase is learned when you recall it again days later.</p>
+        <label>How would you like to practise?<select id="quizType">
+          <option value="choice">Read Japanese → choose the meaning</option>
+          <option value="listen">Listen → choose the meaning</option>
+          <option value="recall">English → choose the Japanese</option>
+          <option value="speak">English → say it in Japanese</option>
+          <option value="type">English → type the Japanese</option>
+        </select></label>
+        <p id="dueCount" class="muted"></p>
+        <div class="button-row"><button id="startQuiz" class="primary">Start practice</button><button id="reviewQuiz" class="secondary">Review due cards</button><button id="trickyQuiz" class="secondary">Tricky phrases</button></div>
+      </div>
+      <div id="quizArea" hidden>
+        <div class="section-line"><span id="quizProgress"></span><button id="endQuiz" class="quiet">End session</button></div><progress id="quizBar" max="10" value="0" aria-label="Cards completed"></progress>
+        <article class="quiz-card"><p id="quizPrompt" class="eyebrow"></p>
+          <div class="japanese-line"><button id="quizSpeak" class="speaker" aria-label="Hear the practice phrase">▶</button><div id="quizQuestion" class="quiz-question" lang="ja"></div></div><p id="quizHint" class="muted"></p>
+          <div id="answers" class="answers"></div>
+          <form id="typeForm" hidden><label for="typedAnswer">Hiragana, katakana, kanji or romaji</label><input id="typedAnswer" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="e.g. arigatou"><button type="submit" id="checkTyped" class="primary wide">Check answer</button></form>
+          <div id="speakArea" class="speak-area" hidden>
+            <button id="micButton" class="mic" aria-pressed="false"><span aria-hidden="true">●</span><span id="micLabel">Tap and speak</span></button>
+            <p id="heard" class="heard" aria-live="polite"></p>
+            <div id="speakChoices" class="button-row" hidden><button id="speakRetry" class="secondary">Try again</button><button id="speakAccept" class="secondary">Count it as right</button><button id="speakGiveUp" class="quiet">Show the answer</button></div>
+            <div id="selfCheck" class="button-row" hidden><button id="selfReveal" class="primary wide">I said it. Show the answer</button></div>
+            <div id="selfMark" class="button-row" hidden><button id="selfRight" class="primary">I got it right</button><button id="selfWrong" class="secondary">Not yet</button></div>
+          </div>
+          <div id="feedback" class="feedback" role="status" aria-live="polite" hidden></div><button id="continueQuiz" class="primary wide" hidden>Continue →</button>
+        </article>
+      </div>
+      <div id="quizSummary" class="panel" hidden><p class="eyebrow">ONE STEP FURTHER</p><h2>Practice complete.</h2><p id="summaryText"></p><button id="again" class="primary">Practise again</button></div>
+    </section>
+
+    <section id="writeView" class="view" hidden>
+      <div class="panel write-intro"><p class="eyebrow">STROKE BY STROKE</p><h2>Write it to own it.</h2><p>Every kanji and katakana in this set. Watch the order, then write. Write each character correctly three times to master it.</p>
+        <div id="charStrip" class="char-strip" role="list"></div></div>
+      <article class="write-card">
+        <div class="write-head"><div id="writeChar" class="write-char" lang="ja"></div><div><p id="writeMeaning" class="write-meaning"></p><p id="writeReading" class="muted"></p><div class="japanese-line write-example"><button id="writeSpeak" class="speaker small" aria-label="Hear the example phrase">▶</button><span id="writeExample" lang="ja"></span></div></div></div>
+        <div class="write-grid">
+          <figure class="model"><svg id="model" viewBox="0 0 109 109" role="img" aria-label="Stroke order animation"></svg><figcaption><button id="playStrokes" class="secondary">▶ Watch the strokes</button></figcaption></figure>
+          <div class="pad"><canvas id="pad" aria-label="Writing area. Draw the character with your finger, stylus or mouse."></canvas>
+            <div class="pad-tools"><span id="strokeCount" class="muted"></span><label class="check-label inline"><input id="guideToggle" type="checkbox" checked> Guide</label><button id="clearPad" class="quiet">Clear</button></div></div>
+        </div>
+        <p id="writeMsg" class="write-msg" role="status" aria-live="polite"></p>
+        <div class="mastery"><span id="masteryText"></span><span id="masteryDots" class="dots" aria-hidden="true"></span></div>
+        <div class="button-row"><button id="backToPhrase" class="secondary" hidden>← Back to phrase</button><button id="writeAgain" class="secondary">Write again</button><button id="nextChar" class="primary">Next character →</button></div>
+      </article>
+    </section>
+
+    <section id="exploreView" class="view" hidden>
+      <article class="panel"><p class="eyebrow">ALL ONE HUNDRED</p><h2>Find any phrase.</h2><label for="search">Search Japanese, romaji or English</label><input id="search" type="search" placeholder="e.g. thank, sumimasen, 元気" autocomplete="off"><ol id="phraseList" class="phrase-list"></ol></article>
+      <details open><summary>Reading Japanese out loud</summary><p>は as the topic particle is read <b>wa</b>: こんにちは, 実は, おすすめは. を is read <b>o</b>: 水をください. A small っ doubles the next consonant: 行ってきます is it-te-ki-ma-su. Long vowels matter: ありがとう is arigatō, not arigato. In です and ます the final u is often almost silent: des, mas.</p><p>The original post marks a stressed syllable in red. Japanese actually uses pitch (high and low), not stress, and it changes with region and phrase. Copy the audio rather than a marked syllable.</p></details>
+      <details><summary>Casual or polite?</summary><p>Each card shows its register. <b>Casual</b> is for friends and peers. <b>Polite</b> (です／ます) is your default with clients, agencies, staff and anyone you have just met. <b>Very polite</b> is respectful keigo for clients, galleries and hotels. <b>Slang</b> is fine among friends, risky at work. Many casual phrases have a polite twin in the note.</p></details>
+      <details><summary>Install, audio, speaking & your progress</summary><p>iPhone: open the published HTTPS link in Safari, then Share → Add to Home Screen. On desktop, use the browser’s install option or a bookmark.</p><p>Tap a speaker to hear Japanese. Choose a Japanese voice in settings. If audio is unavailable, use “Listen on the web”. That opens Google Translate; tap its speaker there.</p><p>Speaking practice uses your browser’s speech recognition when it exists (Chrome, Edge, Safari). It checks the words it heard, not your pitch accent. Recognition sometimes writes a word in kanji where we use kana. If you know you said it right, tap “Count it as right”. Without recognition, you say it aloud and check yourself.</p><p>Progress stays in this browser on this device. It does not sync. Correct cards return after 1, 3, 7, then 14 days. A mistake resets the card and brings it back in the same session. Phrases you miss twice or more appear in “Tricky phrases”. Use settings to back up and restore.</p></details>
+      <details><summary>Sources</summary><p>Phrase list: <a href="https://www.instagram.com/p/DfcKta_jA6y/" target="_blank" rel="noopener">@mikanko_studio, “100 phrases Japanese people say every day”</a> (7 Nov 2026). English meanings, usage notes and breakdowns were written for this course.</p><p>Stroke order: <a href="https://kanjivg.tagaini.net" target="_blank" rel="noopener">KanjiVG</a> © Ulrich Apel, <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a>. Browser audio: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Speech_API" target="_blank" rel="noopener">Web Speech API</a>. Voices and accent vary by device.</p></details>
+    </section>
+
+    <div class="audio-footer"><p id="audioStatus" role="status">Tap ▶ to hear Japanese.</p><a id="webListen" href="https://translate.google.com/?sl=ja&tl=en&op=translate" target="_blank" rel="noopener">Listen on the web ↗</a></div>
+    <footer><span id="progressText">A fresh start.</span><span>Kotoba · 言葉 · v1.0 · template v1.0</span></footer>
+  </main>
+</div>
+<dialog id="settings"><form method="dialog"><div class="section-line"><h2>Make it yours.</h2><button class="icon-button" aria-label="Close settings">✕</button></div></form><label>Japanese voice<select id="voice"></select></label><label>Speaking pace<select id="rate"><option value="0.7">Slow · 0.7×</option><option value="0.9">Gentle · 0.9×</option><option value="1">Natural · 1×</option></select></label><label class="check-label"><input id="romajiToggle" type="checkbox" checked> Show romaji on learning cards</label><button id="testVoice" class="secondary wide">▶ Test Japanese voice</button><p class="muted">No Japanese voice? Check your device’s language and voice settings, or use “Listen on the web”. Audio plays only when you tap.</p><button id="exportProgress" class="quiet wide">Download a progress backup</button><label class="quiet">Restore progress backup<input id="importProgress" type="file" accept="application/json,.json"></label><p id="settingsMessage" role="status"></p></dialog>
+<script src="./phrases.js"></script><script src="./strokes.js"></script><script src="./app.js"></script>
+</body></html>
